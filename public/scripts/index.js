@@ -10,8 +10,8 @@ const createCard = (note) => {
   // Create card
   const cardEl = document.createElement('div');
   cardEl.classList.add('card', 'mb-3', 'm-3');
-  cardEl.setAttribute('key', note.note_id);
-
+  cardEl.setAttribute('key', note.title);
+  console.log("note", note)
   // Create card header
   const cardHeaderEl = document.createElement('h4');
   cardHeaderEl.classList.add(
@@ -32,13 +32,15 @@ const createCard = (note) => {
   cardEl.appendChild(cardHeaderEl);
   cardEl.appendChild(cardBodyEl);
 
+  const noteList = document.getElementById('note-list');
+  console.log("Note List", noteList)
   // Append the card element to the tips container in the DOM
-  // tipsContainer.appendChild(cardEl);
+  noteList.appendChild(cardEl);
 };
 
 // Get a list of existing tips from the server
 const getNotes = () =>
-  fetch('/api/note', {
+  fetch('/api/notes', {
     method: 'GET', // or 'PUT'
     headers: {
       'Content-Type': 'application/json',
@@ -70,7 +72,11 @@ const postNote = (note) =>
     });
 
 // When the page loads, get all the tips
-getNotes().then((data) => data.forEach((note) => createCard(note)));
+getNotes()
+  .then((data) => {
+    console.log("data", data);
+    data.forEach((note) => createCard(note))
+  });
 
 // Function to validate the tips that were submitted
 const validateTip = (newNote) => {
