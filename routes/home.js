@@ -9,7 +9,7 @@ const {
 } = require('../helpers/fsUtils');
 
 // GET Route for retrieving all the tips
-router.get('/', (req, res) => {
+router.get('/api/notes', (req, res) => {
   readFromFile('./db/notes.json').then((data) => res.json(JSON.parse(data)));
 });
 
@@ -28,19 +28,13 @@ router.get('/note/:note_id', (req, res) => {
 
 
 
-
-// GET Route for homepage
 router.get('/', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/index.html'))
 );
 
-// // GET Route for feedback page
 router.get('/addnote', (req, res) =>
   res.sendFile(path.join(__dirname, '../public/pages/notes.html'))
 );
 
-// // Wildcard route to direct users to a 404 page
-// router.get('*', (req, res) =>
-//   res.sendFile(path.join(__dirname, 'public/pages/404.html'))
-// );
+
 module.exports = router;
